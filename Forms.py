@@ -30,7 +30,7 @@ class LoginForm(FlaskForm):
     password = PasswordField("Password", validators=[DataRequired()])
     remember_me = BooleanField("Remember Me")
     submit = SubmitField("Log In")
-# the file upload form
+# the file uploading form
 class FileUploadForm(FlaskForm):
     name = StringField("File Name", validators=[DataRequired(),Length(min=3,max=20)])
     email = StringField("File Authors Email", validators=[DataRequired(), Email()])
@@ -41,7 +41,7 @@ class FileUploadForm(FlaskForm):
         filename = FileUpload.query.filter_by(name=name.data).first()
         if filename:
             raise ValidationError('File by That name already exists')
-# the search form
+# the searching form
 class SearchForm(FlaskForm):
     parameter = StringField("Search",validators=[DataRequired()])
     submit = SubmitField("search")
