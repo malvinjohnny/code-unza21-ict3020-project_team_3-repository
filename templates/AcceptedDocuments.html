@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>{{title}}</title>
+{% endblock %}
+
+{% block body %}
+<form method="POST" action="">
+    {{form.hidden_tag()}}
+    <fieldset class="form-group">
+        <legend class="border-bottom mb-4">Search</legend>
+        <div class = "form-group">
+            {{form.parameter.label(class="form-control-label")}}
+            {% if form.parameter.errors%}
+                {{form.parameter(class="form-control form-control-lg is-invalid")}}
+                <div class="invalid-feedback">
+                    {%for error in form.parameter.errors%}
+                    <span>{{error}}</span>
+                    {%endfor%}
+                </div>
+            {%else%}
+                {{form.parameter(class="form-control form-control-lg")}}
+            {%endif%}
+        </div>
+        
+    </fieldset>
+    <div class="form-group">
+        {{form.submit(class="btn btn-outline-info")}}
+    </div>
+</form>
+<hr>
+<h3> Available Documents: </h3>
+{%if posts%}
+    {%for post in posts%}
+        <div class = "content-DocumentDownload">
+            <b>{{post.name}}</b>
+            <br>
+            <small class="font-weight-normal">Creator: {{post.author_email}}</small>
+            <br>
+            <small class="font-weight-normal">Reviewed By: {{post.staff_email}}</small>
+            <br>
+            <small class="font-weight-light">Date Uploaded: {{post.data_posted.strftime('%Y-%m-%d')}}</small>
+            <br>
+            <hr>
+            <button class="btn btn-outline-primary"><a href = "{{url_for("download",file=post.name)}}"> Download </a></button>
+
+
+        </div>
+    {%endfor%}
+{%else%}
+    <h4>DataBase is empty or Does not much search</h4>
+
+{%endif%}
+{% endblock %}

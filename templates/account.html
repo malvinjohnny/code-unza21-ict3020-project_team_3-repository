@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>{{current_user.username + "'s " +title}}</title>
+{% endblock %}
+
+{% block body %}
+<div class="content-section2">
+    <!-- div to show account details-->
+    <div class="media">
+        <img class="rounded-circle account-img" src={{ image_post }}>
+        <div class="media-body">
+            <h2 class="account-headinf">{{current_user.username}} </h2>
+            <p class="text-secondary">{{current_user.email}}</p>
+        </div>
+    </div>
+    <!-- 
+        
+        this div is used to display the form passed it on the account route
+        ! Note: ** flask boot strap can be used to automatically render these forms but this 
+        ! just give a bit more controll over how thy look,
+        ? A similler form arrangment is used on all pages that have a form so no explaniation is needed all that 
+        ? should be know is that they work
+    -->
+    <div class="content-form">
+        <form method="POST" action="" enctype="multipart/form-data">
+            {{form.hidden_tag()}}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4"> Upload File </legend>
+                <div class="form-group">
+                    {{form.name.label(class="form-control-label")}}
+                    {% if form.name.errors%}
+                    {{form.name(class="form-control form-control-lg is-invalid")}}
+                    <div class="invalid-feedback">
+                        {%for error in form.email.errors%}
+                        <span>{{error}}</span>
+                        {%endfor%}
+                    </div>
+                    {%else%}
+                    {{form.name(class="form-control form-control-lg")}}
+                    {%endif%}
+                </div>
+                <div class="form-group">
+                    {{form.email.label(class="form-control-label")}}
+                    {% if form.email.errors%}
+                    {{form.email(class="form-control form-control-lg is-invalid")}}
+                    <div class="invalid-feedback">
+                        {%for error in form.email.errors%}
+                        <span>{{error}}</span>
+                        {%endfor%}
+                    </div>
+                    {%else%}
+                    {{form.email(class="form-control form-control-lg")}}
+                    {%endif%}
+                </div>
+                <br class="form-group">
+                    {{form.file.label()}}
+                    {{form.file(class="form-control-file")}}
+                    {% if form.file.errors%}
+                        {%for error in form.file.errors%}
+                        <span>{{error}}</span></br>
+                        {%endfor%}
+                    {%endif%}
+                <br class="form-group">
+                <div class="form-check">
+                    {{form.ignore_spellCheck(class="form-check-input")}}
+                    {{form.ignore_spellCheck.label(class="form-check-label")}}
+                </div>
+            <br class="form-group">
+            <div class="form-group">
+                {{form.submit(class="btn btn-outline-info")}}
+            </div>
+        </fieldset>
+    </form>
+        </div>
+        
+        <div>
+</div>
+
+{% endblock %}

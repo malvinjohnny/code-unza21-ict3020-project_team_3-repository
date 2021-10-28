@@ -1,0 +1,110 @@
+<!--
+  Since Flask uses jinja2 all other pages inherit form this one so all changes to this file
+  unless overriden will apply to all pages on the site
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <script src="{{url_for('static', filename='js/bootstrap.min.js')}}"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.15.3/css/all.css"
+      integrity="sha384-Bfad6CLCknfcloXFOyFnlgtENryhrpZCe29RTifKEixXQZ38WheV+i/6YWSzkz3V"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css"
+    />
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+    <!--<title>SITE NAME</title>-->
+    <link
+      rel="icon"
+      href="{{url_for('static',filename='images/profilePic_trimmed.png')}}"
+      type="image/icon type"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
+    />
+    {% block head %}{% endblock %}
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">DONAR</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="{{url_for("index")}}">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{url_for("documents")}}">Review Document</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">about</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+            </li>
+          </ul>
+          <div class="navbar-nav ml-auto mb-2 mb-lg-0">
+          {% if current_user.is_authenticated == False%}
+            <a class="nav-link" href="{{url_for("login")}}" tabindex="-1" aria-disabled="true">Login</a>
+            <a class="nav-link" href="{{url_for("register")}}" tabindex="-1" aria-disabled="true">Register</a>
+          {%else%}
+          <a class="nav-link" href="{{url_for("account")}}" tabindex="-1" aria-disabled="true">Account</a>  
+          <a class="nav-link" href="{{url_for("logout")}}" tabindex="-1" aria-disabled="true">Logout</a>
+          {%endif%}
+        </div>
+        </div>
+
+      </div>
+    </nav>
+    <main>
+      <!--This part is used to support message flashing so messahes can be shown on the page-->
+      <div class="content-section">
+      {% with messages = get_flashed_messages(with_categories=true)%} {%if
+      messages%} {%for category,message in messages%}
+      <div class="alert alert-{{category}}">
+        {{message}}
+      </div>
+    
+      {%endfor%} {%endif%} {%endwith%} 
+      <!--
+        This is the block where all content is displayed on other pages
+        Think of it as a varible
+      -->
+      {% block body %}{% endblock %}</div>
+    </main>
+    <script src="{{url_for('static', filename='js/bootstrap.min.js')}}"></script>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/bootstrap.min.css' )}}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/bootstrap.css' )}}"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='css/main.css' )}}"
+    />
+  </body>
+</html>
